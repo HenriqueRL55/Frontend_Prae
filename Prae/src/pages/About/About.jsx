@@ -7,7 +7,7 @@ const About = () => {
     <section className='about'>
       <div className='container'>
         <div className='section-title'>
-          <h2>About</h2>
+          <h2>Sobre</h2>
         </div>
 
         <div className='about-content grid'>
@@ -15,9 +15,8 @@ const About = () => {
             <img src = {aboutImg} alt = "" />
           </div>
           <div className='about-text'>
-            <h2 className='about-title fs-26 ls-1'>About BookHub</h2>
-            <p className='fs-17'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus dignissimos consequuntur vero commodi provident maiores, iusto atque corrupti voluptate vel sequi consectetur unde aliquam corporis saepe animi non, tempora reiciendis molestias sed laudantium dolores. Assumenda aperiam fuga quo voluptate commodi ullam aliquam expedita voluptas delectus.</p>
-            <p className='fs-17'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, dicta, possimus inventore eveniet atque voluptatibus repellendus aspernatur illo aliquam dignissimos illum. Commodi, porro omnis dolore amet neque modi quas eum!</p>
+            <h2 className='about-title fs-26 ls-1'>Sobre a PRAE</h2>
+            <p className='fs-17'>A Pró-Reitoria de Assuntos Estudantis (PRAE) é o órgão administrativo da UFSM que planeja, operacionaliza, supervisiona, orienta e, juntamente com os acadêmicos, interage nas atividades universitárias que abrangem o campo cultural, social e assistencial da Política de Assistência Estudantil da Universidade Federal de Santa Maria. A PRAE localiza-se no terceiro andar do prédio 48-D, no Campus Sede. </p>     
           </div>
         </div>
       </div>

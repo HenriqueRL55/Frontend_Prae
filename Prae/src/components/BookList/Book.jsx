@@ -15,11 +15,11 @@ const Book = (book) => {
           </div>
         </Link>
         <div className='book-item-info-item author fs-15'>
-          <span className='text-capitalize fw-7'>Author: </span>
+          <span className='text-capitalize fw-7'>Autor: </span>
           <span>{book.author}</span>
         </div>
      
-teste 
+teste
       </div>
     </div>
   )
