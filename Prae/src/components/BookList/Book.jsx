@@ -18,8 +18,6 @@ const Book = (book) => {
           <span className='text-capitalize fw-7'>Autor: </span>
           <span>{book.author}</span>
         </div>
-     
-teste
       </div>
     </div>
   )

@@ -18,6 +18,7 @@ const CrudBook = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const imageInputRef = useRef(null);
+  const searchText = useRef('');
 
   useEffect(() => {
     fetchBooks();
@@ -124,6 +125,17 @@ const CrudBook = () => {
     setShowConfirmation(false);
   };
 
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.get(`https://prae-backend-projeto.herokuapp.com/books?title=${searchText.current.value}`);
+      setBooks(response.data.books);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="crud-container">
       <div className="crud-container1">
@@ -195,6 +207,19 @@ const CrudBook = () => {
         </form>
       </div>
       <div className="crud-container2">
+        <form onSubmit={handleSearch}>
+          <div className="form-group">
+            <label htmlFor="search">Buscar por título:</label>
+            <input
+              type="text"
+              id="search"
+              name="search"
+              ref={searchText}
+              required
+            />
+          </div>
+          <button className="buttonCrud" type="submit">Buscar</button>
+        </form>
         {books.map((book) => (
           <div key={book.id} className="book-info">
             <h3>{book.title}</h3>
@@ -207,7 +232,6 @@ const CrudBook = () => {
           </div>
         ))}
       </div>
-
       {selectedBook && (
         <div className="modal">
           <div className="modal-content">
@@ -274,19 +298,22 @@ const CrudBook = () => {
                 required
               />
             </div> */}
-            <button className="buttonCrud" onClick={handleEditBook}>Editar</button>
-            <button className="buttonCrud" onClick={handleCloseModal}>Fechar</button>
+            <div className="modal-buttons">
+              <button onClick={handleEditConfirmed}>Salvar</button>
+              <button onClick={handleCloseModal}>Fechar</button>
+            </div>
           </div>
         </div>
       )}
-
       {showConfirmation && (
         <div className="modal">
           <div className="modal-content">
-            <h3>Confirmação</h3>
-            <p>Deseja salvar as alterações feitas?</p>
-            <button className="buttonCrud" onClick={handleEditConfirmed}>Salvar</button>
-            <button className="buttonCrud" onClick={handleCloseModal}>Cancelar</button>
+            <h3>Confirmação de Edição</h3>
+            <p>Deseja realmente editar o livro?</p>
+            <div className="modal-buttons">
+              <button onClick={handleEditBook}>Confirmar</button>
+              <button onClick={handleCloseModal}>Cancelar</button>
+            </div>
           </div>
         </div>
       )}
