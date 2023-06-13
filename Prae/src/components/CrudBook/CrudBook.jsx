@@ -49,32 +49,7 @@ const CrudBook = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const formData = new FormData();
-      formData.append('title', bookData.title);
-      formData.append('author', bookData.author);
-      formData.append('category', bookData.category);
-      formData.append('cover', bookData.cover);
-      formData.append('quantity', bookData.quantity);
-
-      await axios.post('https://prae-backend-projeto.herokuapp.com/books', formData);
-
-      setBookData({
-        title: '',
-        author: '',
-        category: '',
-        cover: null,
-        quantity: 0,
-      });
-      imageInputRef.current.value = null;
-      fetchBooks();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+ 
 
   const handleBookClick = (book) => {
     setSelectedBook(book);
@@ -92,6 +67,34 @@ const CrudBook = () => {
 
   const handleEditBook = () => {
     setShowConfirmation(true);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await axios.post(
+        'https://prae-backend-projeto.herokuapp.com/books',
+        {
+          title: bookData.title
+        }
+      );
+  
+      const newBook = response.data.Book;
+      console.log('Novo livro criado:', newBook);
+  
+      setBookData({
+        title: '',
+        author: '',
+        category: '',
+        cover: null,
+        quantity: 0,
+      });
+      imageInputRef.current.value = null;
+      fetchBooks();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleEditConfirmed = async () => {
@@ -207,7 +210,7 @@ const CrudBook = () => {
         </form>
       </div>
       <div className="crud-container2">
-        <form onSubmit={handleSearch}>
+        {/* <form onSubmit={handleSearch}>
           <div className="form-group">
             <label htmlFor="search">Buscar por título:</label>
             <input
@@ -219,7 +222,7 @@ const CrudBook = () => {
             />
           </div>
           <button className="buttonCrud" type="submit">Buscar</button>
-        </form>
+        </form> */}
         {books.map((book) => (
           <div key={book.id} className="book-info">
             <h3>{book.title}</h3>
