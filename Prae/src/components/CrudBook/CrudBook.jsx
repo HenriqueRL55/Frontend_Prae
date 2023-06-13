@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import './CrudBook.css';
 
-const categories = ['Categoria 1', 'Categoria 2', 'Categoria 3', 'Categoria 4', 'Categoria 5', 'Categoria 6'];
+const categories = [1, 2, 3, 4, 5, 6];
 
 const CrudBook = () => {
   const [books, setBooks] = useState([]);
@@ -27,12 +27,18 @@ const CrudBook = () => {
   const fetchBooks = async () => {
     try {
       const response = await axios.get('https://prae-backend-projeto.herokuapp.com/books/all');
-      setBooks(response.data.books);
+      const booksWithImageUrl = response.data.books.map((book) => {
+        if (book.cover) {
+          book.imageUrl = `https://prae-backend-projeto.herokuapp.com/showImage/${book.cover}`;
+        }
+        return book;
+      });
+      setBooks(booksWithImageUrl);
     } catch (error) {
       console.log(error);
     }
-  };
-
+  };  
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setBookData((prevData) => ({
@@ -48,8 +54,6 @@ const CrudBook = () => {
       cover: file,
     }));
   };
-
- 
 
   const handleBookClick = (book) => {
     setSelectedBook(book);
@@ -71,18 +75,17 @@ const CrudBook = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      const response = await axios.post(
-        'https://prae-backend-projeto.herokuapp.com/books',
-        {
-          title: bookData.title
-        }
-      );
-  
-      const newBook = response.data.Book;
-      console.log('Novo livro criado:', newBook);
-  
+      const formData = new FormData();
+      formData.append('title', bookData.title);
+      formData.append('author', bookData.author);
+      formData.append('category', bookData.category);
+      formData.append('cover', bookData.cover);
+      formData.append('quantity', bookData.quantity);
+
+      await axios.post('https://prae-backend-projeto.herokuapp.com/books', formData);
+
       setBookData({
         title: '',
         author: '',
@@ -178,8 +181,8 @@ const CrudBook = () => {
               <option value="">Selecione uma categoria</option>
               {categories.map((category) => (
                 <option key={category} value={category}>
-                  {category}
-                </option>
+                Categoria {category}
+              </option>
               ))}
             </select>
           </div>
@@ -194,7 +197,7 @@ const CrudBook = () => {
               required
             />
           </div>
-          {/* <div className="form-group">
+          <div className="form-group">
             <label htmlFor="cover">Imagem da Capa:</label>
             <input
               type="file"
@@ -205,12 +208,12 @@ const CrudBook = () => {
               ref={imageInputRef}
               required
             />
-          </div> */}
+          </div>
           <button className="buttonCrud" type="submit">Salvar</button>
         </form>
       </div>
       <div className="crud-container2">
-        {/* <form onSubmit={handleSearch}>
+        <form onSubmit={handleSearch}>
           <div className="form-group">
             <label htmlFor="search">Buscar por título:</label>
             <input
@@ -222,12 +225,12 @@ const CrudBook = () => {
             />
           </div>
           <button className="buttonCrud" type="submit">Buscar</button>
-        </form> */}
+        </form>
         {books.map((book) => (
           <div key={book.id} className="book-info">
             <h3>{book.title}</h3>
             <p>Autor: {book.author}</p>
-            <img src={book.cover} alt="Capa do Livro" />
+            {book.imageUrl && <img src={book.imageUrl} alt="Capa do Livro" />}
             <p>Categoria: {book.category}</p>
             <p>Quantidade: {book.quantity}</p>
             <button onClick={() => handleBookClick(book)}>Detalhes</button>
@@ -273,7 +276,7 @@ const CrudBook = () => {
                 <option value="">Selecione uma categoria</option>
                 {categories.map((category) => (
                   <option key={category} value={category}>
-                    {category}
+                     Categoria {category}
                   </option>
                 ))}
               </select>
@@ -289,18 +292,18 @@ const CrudBook = () => {
                 required
               />
             </div>
-            {/* <div className="form-group">
-              <label htmlFor="modal-cover">Imagem da Capa:</label>
+            <div className="form-group">
+              <label htmlFor="cover">Imagem da Capa:</label>
               <input
                 type="file"
-                id="modal-cover"
+                id="cover"
                 name="cover"
                 accept="image/*"
                 onChange={handleImageUpload}
                 ref={imageInputRef}
                 required
               />
-            </div> */}
+            </div>
             <div className="modal-buttons">
               <button onClick={handleEditConfirmed}>Salvar</button>
               <button onClick={handleCloseModal}>Fechar</button>

@@ -10,6 +10,7 @@ import About from "./pages/About/About";
 import BookList from "./components/BookList/BookList";
 import BookDetails from "./components/BookDetails/BookDetails";
 import CrudBook from './components/CrudBook/CrudBook';
+import Login from './components/Login/Login';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,6 +22,7 @@ root.render(
           <Route path = "book" element = {<BookList />} />
           <Route path = "crudBook" element = {<CrudBook />} />
           <Route path = "/book/:id" element = {<BookDetails />} />
+          <Route path = "login" element = {<Login />} />
         </Route>
       </Routes>
     </BrowserRouter>
