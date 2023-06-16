@@ -8,7 +8,8 @@ import SearchForm from "../SearchForm/SearchForm";
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const handleNavbar = () => setToggleMenu(!toggleMenu);
-
+  //tem q adicionar o search form aqui
+  // tá quebrando a pagina
   return (
     <nav className='navbar' id = "navbar">
       <div className='container navbar-content flex'>
@@ -23,7 +24,6 @@ const Navbar = () => {
             }} />
           </button>
         </div>
-        <SearchForm />    
         <div className={toggleMenu ? "navbar-collapse show-navbar-collapse" : "navbar-collapse"}>
           <ul className = "navbar-nav">
             <li className='nav-item'>

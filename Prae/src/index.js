@@ -1,31 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {
-  BrowserRouter, Routes, Route
-} from 'react-router-dom';
-import { AppProvider } from './context.';
 import './index.css';
-import Home from './pages/Home/Home';
-import About from "./pages/About/About";
-import BookList from "./components/BookList/BookList";
-import BookDetails from "./components/BookDetails/BookDetails";
-import CrudBook from './components/CrudBook/CrudBook';
-import Login from './components/Login/Login';
-
+import { BrowserRouter as Router } from "react-router-dom";
+import RoutesFunction from "./routes";
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+
 root.render(
-  <AppProvider>
-    <BrowserRouter>
-      <Routes>
-        <Route path = "/" element = {<Home />}>
-          <Route path = "about" element = {<About />} />
-          <Route path = "book" element = {<BookList />} />
-          <Route path = "crudBook" element = {<CrudBook />} />
-          <Route path = "/book/:id" element = {<BookDetails />} />
-          <Route path = "login" element = {<Login />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  </AppProvider>
+  <Router>
+    <RoutesFunction />
+  </Router>
+  
 );
 
