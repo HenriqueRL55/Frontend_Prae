@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
+import { AppContext } from '../../auth/context';
+import api from '../../api/api';
+
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState('');
+  const { login, logout } = useContext(AppContext);
+
+  useEffect(() =>  {
+     async function teste() {
+      const teste = await api.get("/")
+      console.log(teste);
+    }
+    teste();
+  }, [])
+
+
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -23,19 +38,9 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://prae-backend-projeto.herokuapp.com/login', { email, password });
+      console.log(email, password)
+      await login(email, password);
 
-      if (response.status === 200) {
-        // Definir o estado de autenticação como true
-        setLoggedIn(true);
-        // Limpar os campos de email e senha
-        setEmail('');
-        setPassword('');
-        // Limpar a mensagem de erro, se houver
-        setError('');
-      } else {
-        setError('Ocorreu um erro ao fazer login. Verifique suas credenciais e tente novamente.');
-      }
     } catch (error) {
       setError('Ocorreu um erro ao fazer login. Verifique suas credenciais e tente novamente.');
     }

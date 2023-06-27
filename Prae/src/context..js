@@ -1,6 +1,8 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react';
+import React, { useState, useContext, useEffect, useCallback, createContext } from 'react';
 const URL = 'https://prae-backend-projeto.herokuapp.com/books/all';
-const AppContext = React.createContext();
+
+
+const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState('');

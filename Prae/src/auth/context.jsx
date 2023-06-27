@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useCallback, createContext } from 'react';
 
 import {useNavigate} from "react-router-dom";
-
+import api from "../api/api";
 
 const URL = 'https://prae-backend-projeto.herokuapp.com/books/all';
 
@@ -60,21 +60,15 @@ const AppProvider = ({ children }) => {
   }, []);
 
 
-  const login = async (email, senha) => {
+  const login = async (email, password) => {
     try { 
-      const response =  await api.post("/login", {email, senha})
-
-      const user = response.data.user;
-      const token = response.data.token
-
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("token", token);
-
-      api.defaults.headers.Authorization = `Bearer ${token}`;
-      setUser(user);
+      const response =  await api.post("/login", {email, password})
+      
+      navigate("home");
 
       setUser(user);
     } catch (error) {
+      console.log(error);
       throw new Error(error);
     }
   };
@@ -95,7 +89,7 @@ const AppProvider = ({ children }) => {
         searchTerm,
         setSearchTerm,
         fetchBooks,     
-        authenticated:!!user, user, login, loading, logout}}
+        authenticated:!!user, user, login, logout}}
       >
       {children}
     </AppContext.Provider>

@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { AppProvider,AppContext } from "../auth/context";
+import { AppContext } from "../auth/context";
 
 
 const Private = ({ children}) => {
-        const { authenticated, loading, user} = useContext(AuthContext);
+        const { authenticated, loading, user} = useContext(AppContext);
         if (loading) {
             return <div>Carregando...</div>;
         }
