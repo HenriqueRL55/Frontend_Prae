@@ -63,8 +63,10 @@ const AppProvider = ({ children }) => {
   const login = async (email, password) => {
     try { 
       const response =  await api.post("/login", {email, password})
+      const user = response.data.user;
       
-      navigate("home");
+      localStorage.setItem("user", JSON.stringify(user));
+      navigate("/home");
 
       setUser(user);
     } catch (error) {

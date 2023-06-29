@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AppContext } from '../../auth/context';
 import api from '../../api/api';
-
+import { Navigate } from 'react-router-dom';
 
 
 const Login = () => {
@@ -39,7 +39,7 @@ const Login = () => {
 
     try {
       console.log(email, password)
-      await login(email, password);
+      console.log(await login(email, password));
 
     } catch (error) {
       setError('Ocorreu um erro ao fazer login. Verifique suas credenciais e tente novamente.');
