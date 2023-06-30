@@ -1,29 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import "./BookList.css";
+import './BookList.css';
+import coverImg from '../../../src/images/cover_not_found.jpg';
 
 const Book = (book) => {
-  const [coverImg, setCoverImg] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [imageUrl, setImageUrl] = useState('');
 
   useEffect(() => {
     const fetchCoverImage = async () => {
       try {
         const imageUrl = `https://prae-backend-projeto.herokuapp.com/showImage/${book.cover}`;
-        setCoverImg(imageUrl);
-      
+        await axios.get(imageUrl); // Preload the image
+        setImageUrl(imageUrl);
+        setIsLoading(false);
       } catch (error) {
         console.error('Erro ao buscar a imagem do livro:', error);
+        setIsLoading(false);
       }
     };
 
     fetchCoverImage();
-  }, [book.id]);
+  }, [book.cover]);
 
   return (
     <div className='book-item flex flex-column flex-sb'>
       <div className='book-item-img'>
-        <img src={coverImg} alt="cover" />
+        {isLoading ? (
+          <div className='book-item-loading'>Carregando...</div>
+        ) : (
+          <img src={imageUrl || coverImg} alt='Capa' />
+        )}
       </div>
       <div className='book-item-info text-center'>
         <Link to={`/book/${book.id}`} {...book}>

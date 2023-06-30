@@ -8,9 +8,10 @@ import SearchForm from "../SearchForm/SearchForm";
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const handleNavbar = () => setToggleMenu(!toggleMenu);
-  //tem q adicionar o search form aqui
-  // tá quebrando a pagina
+ 
   return (
+    <>
+    
     <nav className='navbar' id = "navbar">
       <div className='container navbar-content flex'>
         <div className='brand-and-toggler flex flex-sb'>
@@ -27,18 +28,19 @@ const Navbar = () => {
         <div className={toggleMenu ? "navbar-collapse show-navbar-collapse" : "navbar-collapse"}>
           <ul className = "navbar-nav">
             <li className='nav-item'>
-              <Link to = "book" className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>Acervo</Link>
+              <Link to = "/book" className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>Acervo</Link>
             </li>
             <li className='nav-item'>
-              <Link to = "about" className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>Sobre Nós</Link>
+              <Link to = "/about" className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>Sobre Nós</Link>
             </li>
             <li className='nav-item'>
-              <Link to = "crudBook" className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>Cadastro</Link>
+              <Link to = "/crudBook" className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>Cadastro</Link>
             </li>
           </ul>
         </div>
       </div>
     </nav>
+    </>
   )
 }
 

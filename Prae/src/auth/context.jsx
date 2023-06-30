@@ -66,7 +66,7 @@ const AppProvider = ({ children }) => {
       const user = response.data.user;
       
       localStorage.setItem("user", JSON.stringify(user));
-      navigate("/home");
+      navigate("/book");
 
       setUser(user);
     } catch (error) {

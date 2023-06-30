@@ -1,10 +1,14 @@
 import React from 'react';
 import "./About.css";
 import aboutImg from "../../images/about-img.jpg";
+import Header from '../../../src/components/Header/Header';
 
 const About = () => {
   return (
+  <>
+    <Header />
     <section className='about'>
+      
       <div className='container'>
         <div className='section-title'>
           <h2>Sobre</h2>
@@ -21,7 +25,9 @@ const About = () => {
         </div>
       </div>
     </section>
+  </>
   )
+  
 }
 
 export default About

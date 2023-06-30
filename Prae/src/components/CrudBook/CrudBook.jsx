@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import './CrudBook.css';
+import Header from '../Header/Header';
 
 const categories = [1, 2, 3, 4, 5, 6];
 
@@ -143,6 +144,9 @@ const CrudBook = () => {
   };
 
   return (
+    <>
+    <Header />
+   
     <div className="crud-container">
       <div className="crud-container1">
         <h1>CRUD de Livros</h1>
@@ -212,20 +216,7 @@ const CrudBook = () => {
           <button className="buttonCrud" type="submit">Salvar</button>
         </form>
       </div>
-      <div className="crud-container2">
-        <form onSubmit={handleSearch}>
-          <div className="form-group">
-            <label htmlFor="search">Buscar por título:</label>
-            <input
-              type="text"
-              id="search"
-              name="search"
-              ref={searchText}
-              required
-            />
-          </div>
-          <button className="buttonCrud" type="submit">Buscar</button>
-        </form>
+      <div className="crud-container2"> 
         {books.map((book) => (
           <div key={book.id} className="book-info">
             <h3>{book.title}</h3>
@@ -324,6 +315,7 @@ const CrudBook = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 
