@@ -8,6 +8,7 @@ import BookList from "../components/BookList/BookList";
 import BookDetails from "../components/BookDetails/BookDetails";
 import CrudBook from "../components/CrudBook/CrudBook";
 import Login from "../components/Login/Login";
+import Favorites from "../components/Favorites/Favorites";
 
 const RoutesFunction = () => {
   return (
@@ -43,6 +44,15 @@ const RoutesFunction = () => {
           element={
             <Private>
               <CrudBook />
+            </Private>
+          }
+        />
+        
+        <Route
+          path="/favorites"
+          element={
+            <Private>
+              <Favorites />
             </Private>
           }
         />
