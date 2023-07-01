@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../../src/components/Header/Header';
 import Book from '../BookList/Book';
+import './Favorites.css';
 
 const Favorites = ({ userId }) => {
   const [favorites, setFavorites] = useState([]);
@@ -24,9 +25,15 @@ const Favorites = ({ userId }) => {
       <section className='favorites'>
         <h1>Meus Favoritos</h1>
         <div className='favorites-list'>
-          {favorites.map((book) => (
-            <Book key={book.id} userId={userId} {...book} />
-          ))}
+          {favorites.length === 0 ? (
+            <p>Você não possui nenhum livro favorito.</p>
+          ) : (
+            favorites.map((book) => (
+              <div className="book-item" key={book.id}>
+                <Book userId={userId} {...book} />
+              </div>
+            ))
+          )}
         </div>
       </section>
     </>
