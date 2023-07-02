@@ -52,22 +52,26 @@ const AppProvider = ({ children }) => {
 
 
   useEffect(() => {
-    const storageUser = localStorage.getItem("user");
-    if (storageUser) {
+    const storageUser = localStorage.getItem('user');
+    const storageToken = localStorage.getItem('token');
+    if (storageUser && storageToken) {
       setUser(JSON.parse(storageUser));
+      api.defaults.headers.Authorization = `Bearer ${storageToken}`;
+      navigate('/book');
     }
     setLoading(false);
   }, []);
-
-
+  
   const login = async (email, password) => {
-    try { 
-      const response =  await api.post("/login", {email, password})
-      const user = response.data.user;
-      
-      localStorage.setItem("user", JSON.stringify(user));
-      navigate("/book");
-
+    try {
+      const response = await api.post('/login', { email, password });
+      const { token, user } = response.data;
+  
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', token.token);
+      api.defaults.headers.Authorization = `Bearer ${token.token}`;
+  
+      navigate('/book');
       setUser(user);
     } catch (error) {
       console.log(error);

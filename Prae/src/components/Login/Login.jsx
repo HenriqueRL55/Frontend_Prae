@@ -5,13 +5,12 @@ import api from '../../api/api';
 import { Navigate } from 'react-router-dom';
 import "./Login.css";
 
-
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState('');
-  const { login, logout } = useContext(AppContext);
+  const { login, logout, user } = useContext(AppContext);
 
   useEffect(() =>  {
      async function teste() {
@@ -20,8 +19,6 @@ const Login = () => {
     }
     teste();
   }, [])
-
-
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -39,8 +36,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      console.log(email, password)
-      console.log(await login(email, password));
+      await login(email, password);
 
     } catch (error) {
       setError('Ocorreu um erro ao fazer login. Verifique suas credenciais e tente novamente.');

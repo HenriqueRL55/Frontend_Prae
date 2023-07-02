@@ -5,6 +5,8 @@ import logoImg from "../../images/logo.png";
 import { GrLogout } from "react-icons/gr";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 
+const user = JSON.parse(localStorage.getItem('user'));
+
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const navigate = useNavigate();
@@ -42,9 +44,11 @@ const Navbar = () => {
               <li className='nav-item'>
                 <Link to="/about" className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>Sobre Nós</Link>
               </li>
+              {user.type === 1 && (
               <li className='nav-item'>
                 <Link to="/crudBook" className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>Cadastro</Link>
               </li>
+              )}
               <li className='nav-item'>
                 <Link to="/favorites" className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>Interesses</Link>
               </li>

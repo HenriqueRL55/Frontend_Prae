@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
-import axios from 'axios';
 import './BookList.css';
 import coverImg from '../../../src/images/cover_not_found.jpg';
 
@@ -12,19 +11,24 @@ const Book = ({ id, title, author, cover, userId }) => {
   useEffect(() => {
     const fetchCoverImage = async () => {
       try {
-        const imageUrl = `https://prae-backend-projeto.herokuapp.com/showImage/${cover}`;
-        await axios.get(imageUrl); // Preload the image
-        setImageUrl(imageUrl);
+        if (cover) {
+          const binaryString = cover.data.reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ''
+          );
+          const base64Image = btoa(binaryString);
+          setImageUrl(`data:image/jpeg;base64,${base64Image}`);
+        }
         setIsLoading(false);
       } catch (error) {
         console.error('Erro ao buscar a imagem do livro:', error);
         setIsLoading(false);
       }
     };
-
+  
     fetchCoverImage();
   }, [cover]);
-
+ 
   useEffect(() => {
     const fetchFavoriteStatus = () => {
       const favoritesByUser = JSON.parse(localStorage.getItem('favoritesByUser')) || {};
@@ -69,7 +73,7 @@ const Book = ({ id, title, author, cover, userId }) => {
         {isLoading ? (
           <div className='book-item-loading'>Carregando...</div>
         ) : (
-          <img src={imageUrl || coverImg} alt='Capa' />
+          <img src={imageUrl ? imageUrl : coverImg} alt='Capa' />
         )}
       </div>
       <div className='book-item-info text-center'>
