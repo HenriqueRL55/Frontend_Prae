@@ -64,7 +64,7 @@ const AppProvider = ({ children }) => {
   
   const login = async (email, password) => {
     try {
-      const response = await api.post('/login', { email, password });
+      const response = await api.post('https://prae-backend-projeto.herokuapp.com/login', { email, password });
       const { token, user } = response.data;
   
       localStorage.setItem('user', JSON.stringify(user));
