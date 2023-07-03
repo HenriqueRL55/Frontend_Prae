@@ -9,12 +9,15 @@ import BookDetails from "../components/BookDetails/BookDetails";
 import CrudBook from "../components/CrudBook/CrudBook";
 import Login from "../components/Login/Login";
 import Favorites from "../components/Favorites/Favorites";
+import Register from "../components/Register/Register";
 
 const RoutesFunction = () => {
   return (
     <AppProvider>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
         <Route
           path="/home"
           element={
@@ -56,7 +59,6 @@ const RoutesFunction = () => {
             </Private>
           }
         />
-
       </Routes>
     </AppProvider>
   );
