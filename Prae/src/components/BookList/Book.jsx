@@ -18,6 +18,8 @@ const Book = ({ id, title, author, cover, userId }) => {
           );
           const base64Image = btoa(binaryString);
           setImageUrl(`data:image/jpeg;base64,${base64Image}`);
+        } else {
+          setImageUrl(coverImg);
         }
         setIsLoading(false);
       } catch (error) {

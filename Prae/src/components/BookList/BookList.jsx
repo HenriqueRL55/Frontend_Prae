@@ -8,7 +8,7 @@ import "./BookList.css";
 import Header from '../Header/Header';
 
 const BookList = () => {
-  const [booksWithCovers, setBooksWithCovers] = useState([]);
+  const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
   const [searchTerm, setSearchTerm] = useState(''); // State for search term
@@ -21,15 +21,7 @@ const BookList = () => {
   const fetchBooks = async () => {
     try {
       const response = await axios.get('https://prae-backend-projeto.herokuapp.com/books/all');
-      const booksWithCovers = response.data.books.map((book) => {
-        if (book.cover) {
-          book.imageUrl = `https://prae-backend-projeto.herokuapp.com/showImage/${book.cover}`;
-        } else {
-          book.imageUrl = coverImg; // Use a default cover image if no cover is available
-        }
-        return book;
-      });
-      setBooksWithCovers(booksWithCovers);
+      setBooks(response.data.books);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -50,13 +42,13 @@ const BookList = () => {
   const endIndex = startIndex + booksPerPage;
 
   // Get the books to be displayed on the current page
-  const booksToDisplay = booksWithCovers.slice(startIndex, endIndex);
+  const booksToDisplay = books.slice(startIndex, endIndex);
 
   // Calculate the total number of pages
-  const totalPages = Math.ceil(booksWithCovers.length / booksPerPage);
+  const totalPages = Math.ceil(books.length / booksPerPage);
 
   // Filter books based on search term
-  const filteredBooks = booksWithCovers.filter((book) =>
+  const filteredBooks = books.filter((book) =>
     book.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
