@@ -5,18 +5,17 @@ import logoImg from "../../images/logo.png";
 import { GrLogout } from "react-icons/gr";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 
-const user = JSON.parse(localStorage.getItem('user'));
-
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const navigate = useNavigate();
   const handleNavbar = () => setToggleMenu(!toggleMenu);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 
   const handleLogout = () => {
     // Limpar os dados do usuário, encerrar a sessão, etc.
     // Exemplo: remover o token de autenticação do localStorage
     localStorage.removeItem('token');
-
+    setUser(null);
     // Redirecionar o usuário para a página de login
     navigate('/');
   };

@@ -80,12 +80,20 @@ const AppProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setUser(null);
-    api.defaults.headers.Authorization = null;
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    api.defaults.headers.Authorization = null;
+    resetState(); // Chame a função para limpar o estado da aplicação
     navigate("/");
   }
+
+  const resetState = () => {
+    setSearchTerm('');
+    setBooks([]);
+    setResultTitle('');
+    setLoading(true);
+    setUser(null);
+  };
 
   return (
     <AppContext.Provider
@@ -95,6 +103,7 @@ const AppProvider = ({ children }) => {
         searchTerm,
         setSearchTerm,
         fetchBooks,     
+        setUser,
         authenticated:!!user, user, login, logout}}
       >
       {children}
