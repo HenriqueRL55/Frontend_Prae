@@ -31,7 +31,7 @@ const Favorites = ({ userId }) => {
             <p>Você não possui nenhum livro favorito.</p>
           ) : (
             favorites.map((book) => (
-              <div className="book-item" key={book.id}>
+              <div  key={book.id}>
                 <Book userId={userId} {...book} />
               </div>
             ))

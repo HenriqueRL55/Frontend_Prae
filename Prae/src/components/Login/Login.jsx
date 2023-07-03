@@ -44,7 +44,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div class="Container">
       {loggedIn ? (
         <div>
           <h1>Você está logado!</h1>
@@ -66,8 +66,13 @@ const Login = () => {
             <i class="fas fa-lock"></i>
               <input type="password" value={password}  placeholder="Senha" onChange={handlePasswordChange} required />
             </div>
+            <div class="buttonsLogin">
             <div class="row button">  
               <button type="submit">Entrar</button>        
+            </div>
+            <div class="row button">  
+              <button type="submit">Registrar</button>        
+            </div>
             </div>
           </form>
           </div>
