@@ -120,13 +120,16 @@ form .signup-link a:hover{
   border: 1px solid  #16a085;
   transition: 1s;
   font-size: 16px;
+  color: black;
 }
 
 .row button:hover{
  background:  #16a085;
+ color: black;
 }
 
 .buttonsLogin{
   display: grid;
   grid-template-columns: 1fr 1fr;
+  color: black;
 }
