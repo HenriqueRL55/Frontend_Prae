@@ -40,7 +40,7 @@ const Navbar = () => {
               <li className='nav-item'>
                 <Link to="/book" className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>Acervo</Link>
               </li>
-              <li className='nav-item'>
+              <li className='nav-about'>
                 <Link to="/about" className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>Sobre Nós</Link>
               </li>
               {user.type === 1 && (

@@ -146,7 +146,6 @@ const CrudBook = () => {
   return (
     <>
     <Header />
-   
     <div className="crud-container">
       <div className="crud-container1">
         <h1>CRUD de Livros</h1>

@@ -38,6 +38,12 @@
 .nav-item{
     margin-bottom: 1.4rem;
 }
+
+.nav-about{
+    width: 12rem;
+    margin-left: 5rem;
+}
+
 .nav-link{
     transition: var(--transition);
 }
