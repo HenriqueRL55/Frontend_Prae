@@ -205,6 +205,7 @@ const CrudBook = () => {
             <input
               type="file"
               id="cover"
+              className="upload"
               name="cover"
               accept="image/*"
               onChange={handleImageUpload}

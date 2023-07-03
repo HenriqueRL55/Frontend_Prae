@@ -22,9 +22,11 @@ const Favorites = ({ userId }) => {
   return (
     <>
       <Header />
-      <section className='favorites'>
-        <h1>Meus Favoritos</h1>
-        <div className='favorites-list'>
+      <section className='booklist'>
+        <div className="container">
+        <h2>Lista de Favoritos</h2>
+      
+        <div className='booklist-content grid'>
           {favorites.length === 0 ? (
             <p>Você não possui nenhum livro favorito.</p>
           ) : (
@@ -34,6 +36,7 @@ const Favorites = ({ userId }) => {
               </div>
             ))
           )}
+        </div>
         </div>
       </section>
     </>
