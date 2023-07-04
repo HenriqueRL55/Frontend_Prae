@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Select from 'react-select';
-import axios from 'axios';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Select from "react-select";
+import axios from "axios";
 import "./Register.css";
 
 const userOptions = [
-  { value: '1', label: 'Administrador' },
-  { value: '2', label: 'Aluno' },
-  { value: '3', label: 'Professor' },
-  { value: '4', label: 'Servidor' },
-  { value: '5', label: 'Externo' }
+  { value: "1", label: "Administrador" },
+  { value: "2", label: "Aluno" },
+  { value: "3", label: "Professor" },
+  { value: "4", label: "Servidor" },
+  { value: "5", label: "Externo" },
 ];
 
 const Register = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [selectedUserType, setSelectedUserType] = useState(null);
-  const [course, setCourse] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [course, setCourse] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -45,21 +45,24 @@ const Register = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('https://prae-backend-projeto.herokuapp.com/users/', {
-        name: name,
-        email: email,
-        password: password,
-        type: selectedUserType.value,
-        course: course
-      });
+      const response = await axios.post(
+        "https://prae-backend-projeto.herokuapp.com/users/",
+        {
+          name: name,
+          email: email,
+          password: password,
+          type: selectedUserType.value,
+          course: course,
+        }
+      );
 
       console.log(response.data); // or do something with the response
 
-      setSuccessMessage('Usuário criado com sucesso!');
+      setSuccessMessage("Usuário criado com sucesso!");
 
       // Redirecionar para a tela de login após 2 segundos
       setTimeout(() => {
-        navigate('/');
+        navigate("/");
       }, 2000);
     } catch (error) {
       console.error(error);
@@ -69,20 +72,40 @@ const Register = () => {
   return (
     <div className="Container">
       <div className="wrapper">
-        <div className="title"><span>Registrar</span></div>
+        <div className="title">
+          <span>Registrar</span>
+        </div>
 
         <form>
           <div className="row">
             <i className="fas fa-user"></i>
-            <input type="text" value={name} placeholder="Nome" onChange={handleNameChange} required />
+            <input
+              type="text"
+              value={name}
+              placeholder="Nome"
+              onChange={handleNameChange}
+              required
+            />
           </div>
           <div className="row">
             <i className="fas fa-envelope"></i>
-            <input type="email" value={email} placeholder="Email" onChange={handleEmailChange} required />
+            <input
+              type="email"
+              value={email}
+              placeholder="Email"
+              onChange={handleEmailChange}
+              required
+            />
           </div>
           <div className="row">
             <i className="fas fa-lock"></i>
-            <input type="password" value={password} placeholder="Senha" onChange={handlePasswordChange} required />
+            <input
+              type="password"
+              value={password}
+              placeholder="Senha"
+              onChange={handlePasswordChange}
+              required
+            />
           </div>
           <div className="row">
             <i className="fas fa-users"></i>
@@ -98,16 +121,23 @@ const Register = () => {
           </div>
           <div className="row">
             <i className="fas fa-graduation-cap"></i>
-            <input type="text" value={course} placeholder="Curso" onChange={handleCourseChange} required />
+            <input
+              type="text"
+              value={course}
+              placeholder="Curso"
+              onChange={handleCourseChange}
+              required
+            />
           </div>
-          <div className="buttonsLogin">
+          <div className="buttonregister">
             <div className="row button">
-              <button type="submit">Entrar</button>
+              <button type="button" onClick={handleRegister}>
+                Registrar
+              </button>
             </div>
-            <div className="row button">
-              <button type="button" onClick={handleRegister}>Registrar</button>
-            </div>
-            {successMessage && <div className="success-message">{successMessage}</div>}
+            {successMessage && (
+              <div className="success-message">{successMessage}</div>
+            )}
           </div>
         </form>
       </div>

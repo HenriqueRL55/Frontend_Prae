@@ -1,19 +1,19 @@
-import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
-import { AppContext } from '../../auth/context';
-import api from '../../api/api';
-import { Navigate } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from "react";
+import axios from "axios";
+import { AppContext } from "../../auth/context";
+import api from "../../api/api";
+import { Navigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const { login, logout, user } = useContext(AppContext);
   const [redirectToRegister, setRedirectToRegister] = useState(false);
 
-  useEffect(() =>  {
+  useEffect(() => {
     async function teste() {
       const teste = await api.get("/");
       console.log(teste);
@@ -39,7 +39,9 @@ const Login = () => {
     try {
       await login(email, password);
     } catch (error) {
-      setError('Ocorreu um erro ao fazer login. Verifique suas credenciais e tente novamente.');
+      setError(
+        "Ocorreu um erro ao fazer login. Verifique suas credenciais e tente novamente."
+      );
     }
   };
 
@@ -61,23 +63,39 @@ const Login = () => {
       ) : (
         <div class="ContainerLogin">
           <div class="wrapper">
-            <div class="title"><span>Login</span></div>
+            <div class="title">
+              <span>Login</span>
+            </div>
             {error && <p>{error}</p>}
             <form onSubmit={handleSubmit}>
               <div class="row">
                 <i class="fas fa-user"></i>
-                <input type="email" value={email} placeholder="Email" onChange={handleEmailChange} required />
+                <input
+                  type="email"
+                  value={email}
+                  placeholder="Email"
+                  onChange={handleEmailChange}
+                  required
+                />
               </div>
               <div class="row">
                 <i class="fas fa-lock"></i>
-                <input type="password" value={password} placeholder="Senha" onChange={handlePasswordChange} required />
+                <input
+                  type="password"
+                  value={password}
+                  placeholder="Senha"
+                  onChange={handlePasswordChange}
+                  required
+                />
               </div>
               <div class="buttonsLogin">
                 <div class="row button">
-                  <button type="submit">Entrar</button>
+                  <button type="button" onClick={handleRegister}>
+                    Registrar
+                  </button>
                 </div>
                 <div class="row button">
-                  <button type="button" onClick={handleRegister}>Registrar</button>
+                  <button type="submit">Entrar</button>
                 </div>
               </div>
             </form>
