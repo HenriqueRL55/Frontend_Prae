@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import './CrudBook.css';
 import Header from '../Header/Header';
+import coverImg from '../../../src/images/cover_not_found.jpg';
 
 const categories = [1, 2, 3, 4, 5, 6];
 
@@ -36,6 +37,8 @@ const CrudBook = () => {
           );
           const base64Image = btoa(binaryString);
           book.imageUrl = `data:image/jpeg;base64,${base64Image}`;
+        } else {
+          book.imageUrl = coverImg;
         }
         return book;
       });
