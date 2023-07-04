@@ -10,6 +10,7 @@ import CrudBook from "../components/CrudBook/CrudBook";
 import Login from "../components/Login/Login";
 import Favorites from "../components/Favorites/Favorites";
 import Register from "../components/Register/Register";
+import FavoritesAdmin from "../components/FavoritesAdmin/FavoritesAdmin";
 
 const RoutesFunction = () => {
   return (
@@ -59,6 +60,16 @@ const RoutesFunction = () => {
             </Private>
           }
         />
+
+<Route
+          path="/favoritesAdmin"
+          element={
+            <Private>
+              <FavoritesAdmin />
+            </Private>
+          }
+        />
+
       </Routes>
     </AppProvider>
   );

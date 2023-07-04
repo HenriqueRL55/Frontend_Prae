@@ -12,13 +12,14 @@ const Navbar = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 
   const handleLogout = () => {
-    // Limpar os dados do usuário, encerrar a sessão, etc.
-    // Exemplo: remover o token de autenticação do localStorage
     localStorage.removeItem('token');
     setUser(null);
-    // Redirecionar o usuário para a página de login
     navigate('/');
   };
+
+  const favoritesLink = user.type === 1 ? "/favoritesAdmin" : "/favorites";
+  const favoritesText = "Interesses";
+
 
   return (
     <>
@@ -44,12 +45,12 @@ const Navbar = () => {
                 <Link to="/about" className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>Sobre Nós</Link>
               </li>
               {user.type === 1 && (
-              <li className='nav-item'>
-                <Link to="/crudBook" className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>Cadastro</Link>
-              </li>
+                <li className='nav-item'>
+                  <Link to="/crudBook" className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>Cadastro</Link>
+                </li>
               )}
               <li className='nav-item'>
-                <Link to="/favorites" className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>Interesses</Link>
+                <Link to={favoritesLink} className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>{favoritesText}</Link>
               </li>
               <li className='nav-item'>
                 <button className='nav-link text-uppercase text-white fs-22 fw-6 ls-1' onClick={handleLogout}><GrLogout /></button>
