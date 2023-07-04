@@ -24,8 +24,31 @@
   
   .upload{
    width: 18rem;
+  }
+
+  .imgBook{
+  margin: auto;
+  width: 120px;
+  height: auto;
+  object-fit: cover;
   
   }
+
+.containerbuttonsDetailDel{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+  .buttonsDetailDel{
+    padding: 10px 20px;
+    background-color: blueviolet;
+    color: white;
+    border: none;
+    margin: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
   
   .crud-container2 {
     max-width: 100%;
@@ -143,3 +166,17 @@
     margin-top: 10px;
   }
   
+  .modal-buttons{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .buttonsSaveClose{
+    padding: 10px 20px;
+    background-color: blueviolet;
+    color: white;
+    border: none;
+    margin: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
