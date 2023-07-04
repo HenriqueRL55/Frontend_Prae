@@ -30,7 +30,12 @@ const CrudBook = () => {
       const response = await axios.get('https://prae-backend-projeto.herokuapp.com/books/all');
       const booksWithImageUrl = response.data.books.map((book) => {
         if (book.cover) {
-          book.imageUrl = `https://prae-backend-projeto.herokuapp.com/showImage/${book.cover}`;
+          const binaryString = book.cover.data.reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ''
+          );
+          const base64Image = btoa(binaryString);
+          book.imageUrl = `data:image/jpeg;base64,${base64Image}`;
         }
         return book;
       });
@@ -38,7 +43,7 @@ const CrudBook = () => {
     } catch (error) {
       console.log(error);
     }
-  };  
+  };
   
   const handleInputChange = (e) => {
     const { name, value } = e.target;
