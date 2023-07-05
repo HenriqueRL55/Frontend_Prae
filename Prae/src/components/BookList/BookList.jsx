@@ -72,7 +72,7 @@ const BookList = () => {
         <div className="container">
           <div className="section-title">
             <h2>Lista de Livros</h2>
-            <div className="search-form">
+            <div className="searchForm">
               <input
                 type="text"
                 placeholder="Buscar por título..."
@@ -82,17 +82,17 @@ const BookList = () => {
             </div>
             <div className="pagination">
               <button
-                className="pagination-button"
+                className="paginationButton"
                 onClick={handlePreviousPage}
                 disabled={pageNumber === 1}
               >
                 Anterior
               </button>
-              <span className="pagination-page">
+              <span className="paginationPage">
                 {pageNumber}/{totalPages}
               </span>
               <button
-                className="pagination-button"
+                className="paginationButton"
                 onClick={handleNextPage}
                 disabled={endIndex >= filteredBooks.length}
               >

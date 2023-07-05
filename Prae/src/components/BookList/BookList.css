@@ -17,6 +17,21 @@
   color: goldenrod;
 }
 
+.paginationPage {
+  margin-left: 12px;
+  margin-right: 12px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.paginationButton {
+  background-color: blueviolet;
+  padding: 12px;
+  border-radius: 12px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
 .star-icon1 {
   color: goldenrod;
   transition: color 0.3s;
