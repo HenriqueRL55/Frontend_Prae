@@ -26,7 +26,7 @@ const FavoritesAdmin = () => {
       <Header />
       <section className='booklist'>
         <div className="container">
-          <h2>Lista de Favoritos</h2>
+          <h2>Dashboard de interesses</h2>
 
           <div className='booklist-content grid'>
             {favorites.length === 0 ? (
