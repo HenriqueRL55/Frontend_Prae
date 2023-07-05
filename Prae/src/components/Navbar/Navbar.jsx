@@ -18,7 +18,6 @@ const Navbar = () => {
   };
 
   const favoritesLink = user.type === 1 ? "/favoritesAdmin" : "/favorites";
-  const favoritesText = "Interesses";
 
 
   return (
@@ -50,7 +49,7 @@ const Navbar = () => {
                 </li>
               )}
               <li className='nav-item'>
-                <Link to={favoritesLink} className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>{favoritesText}</Link>
+                <Link to={favoritesLink} className='nav-link text-uppercase text-white fs-22 fw-6 ls-1'>Interesses</Link>
               </li>
               <li className='nav-item'>
                 <button className='nav-link text-uppercase text-white fs-22 fw-6 ls-1' onClick={handleLogout}><GrLogout /></button>

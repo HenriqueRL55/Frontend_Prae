@@ -1,68 +1,49 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Header from '../../../src/components/Header/Header';
-import './FavoritesAdmin.css';
 import Book from '../BookList/Book';
+import './FavoritesAdmin.css';
 
-const FavoritesAdmin = ({ userId }) => {
+const FavoritesAdmin = () => {
   const [favorites, setFavorites] = useState([]);
-  const [searchAuthor, setSearchAuthor] = useState('');
-  const [filteredFavorites, setFilteredFavorites] = useState([]);
 
   useEffect(() => {
-    const fetchFavorites = () => {
-      const favoritesByUser = JSON.parse(localStorage.getItem('favoritesByUser')) || {};
-
-      if (favoritesByUser[userId]) {
-        const userFavorites = favoritesByUser[userId];
-        setFavorites(userFavorites);
+    const fetchFavorites = async () => {
+      try {
+        const url = 'https://prae-backend-projeto.herokuapp.com/interests/all';
+        const response = await axios.get(url);
+        setFavorites(response.data.interests);
+      } catch (error) {
+        console.error('Erro ao buscar os livros favoritos:', error);
       }
     };
 
     fetchFavorites();
-  }, [userId]);
-
-  useEffect(() => {
-    const filterFavoritesByAuthor = () => {
-      if (searchAuthor.trim() === '') {
-        setFilteredFavorites(favorites);
-      } else {
-        const filtered = favorites.filter((book) =>
-          book.author.toLowerCase().includes(searchAuthor.toLowerCase())
-        );
-        setFilteredFavorites(filtered);
-      }
-    };
-
-    filterFavoritesByAuthor();
-  }, [searchAuthor, favorites]);
-
-  const handleSearchChange = (event) => {
-    setSearchAuthor(event.target.value);
-  };
+  }, []);
 
   return (
     <>
       <Header />
       <section className='booklist'>
-        <div className='container'>
-          <h2>Troca de Livros</h2>
-
-          <div className='search-form'>
-            <input
-              type='text'
-              placeholder='Pesquisar por usuário'
-              value={searchAuthor}
-              onChange={handleSearchChange}
-            />
-          </div>
+        <div className="container">
+          <h2>Lista de Favoritos</h2>
 
           <div className='booklist-content grid'>
-            {filteredFavorites.length === 0 ? (
-              <p>Nenhum livro favorito encontrado para o usuário pesquisado.</p>
+            {favorites.length === 0 ? (
+              <p>Nenhum livro foi favoritado.</p>
             ) : (
-              filteredFavorites.map((book) => (
-                <div key={book.id}>
-                  <Book userId={userId} {...book} />
+              favorites.map((favorite) => (
+                <div key={favorite.id}>
+                  {console.log(favorite)}
+                  <Book
+                    id={favorite.book_id}
+                    title={favorite.book_title}
+                    author={favorite.book_author}
+                    cover={favorite.cover}
+                    userName={favorite.user_name}
+                  />
+                  Nome:{favorite.user_name}
+                  Categoria: {favorite.book_category}
                 </div>
               ))
             )}
