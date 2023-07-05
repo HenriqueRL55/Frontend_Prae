@@ -6,7 +6,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { AppContext } from "../../auth/context";
 
-const Book = ({ id, title, author, cover }) => {
+const Book = ({ id, title, author, cover, userName, onClick }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [imageUrl, setImageUrl] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
@@ -57,7 +57,7 @@ const Book = ({ id, title, author, cover }) => {
   };
 
   return (
-    <div className="book-item flex flex-column flex-sb">
+    <div className="book-item flex flex-column flex-sb" onClick={onClick}>
       <div className="book-item-img">
         {isLoading ? (
           <div className="book-item-loading">Carregando...</div>
