@@ -33,15 +33,15 @@ const Login = () => {
     setLoggedIn(false);
   };
 
-   useEffect(() => {
+  useEffect(() => {
     if (user) {
       console.log(user); // Aqui você pode acessar o objeto do usuário
     }
   }, [user]);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       await login(email, password);
       navigate("/book", { state: { user } });
@@ -51,10 +51,6 @@ const Login = () => {
       );
     }
   };
-  
- 
-  
-  
 
   const handleRegister = () => {
     setRedirectToRegister(true);
@@ -74,7 +70,7 @@ const Login = () => {
       ) : (
         <div class="ContainerLogin">
           <div class="wrapper">
-            <div class="title">
+            <div class="titleLogin">
               <span>Login</span>
             </div>
             {error && <p>{error}</p>}

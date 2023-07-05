@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Header from '../../../src/components/Header/Header';
-import Book from '../BookList/Book';
-import './FavoritesAdmin.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Header from "../../../src/components/Header/Header";
+import Book from "../BookList/Book";
+import "./FavoritesAdmin.css";
+import Select from "react-select";
 
 const FavoritesAdmin = () => {
   const [favorites, setFavorites] = useState([]);
@@ -10,11 +11,11 @@ const FavoritesAdmin = () => {
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        const url = 'https://prae-backend-projeto.herokuapp.com/interests/all';
+        const url = "https://prae-backend-projeto.herokuapp.com/interests/all";
         const response = await axios.get(url);
         setFavorites(response.data.interests);
       } catch (error) {
-        console.error('Erro ao buscar os livros favoritos:', error);
+        console.error("Erro ao buscar os livros favoritos:", error);
       }
     };
 
@@ -24,11 +25,11 @@ const FavoritesAdmin = () => {
   return (
     <>
       <Header />
-      <section className='booklist'>
+      <section className="booklist">
         <div className="container">
           <h2>Dashboard de interesses</h2>
 
-          <div className='booklist-content grid'>
+          <div className="booklist-content grid">
             {favorites.length === 0 ? (
               <p>Nenhum livro foi favoritado.</p>
             ) : (
@@ -40,10 +41,24 @@ const FavoritesAdmin = () => {
                     title={favorite.book_title}
                     author={favorite.book_author}
                     cover={favorite.cover}
-                    userName={favorite.user_name}
                   />
-                  Nome:{favorite.user_name}
-                  Categoria: {favorite.book_category}
+                  <div className="changeStyle">
+                    <div>
+                      <span> Nome: {favorite.user_name}</span>
+                      <span> Categoria: {favorite.book_category}</span>
+                    </div>
+                    <div className="AutocompleteStyle">
+                      <Select
+                        className="select"
+                        // value={selectedUserType}
+                        // onChange={handleUserTypeChange}
+                        // options={userOptions}
+                        placeholder="Em andamento"
+                        //isSearchable={false}
+                        required
+                      />
+                    </div>
+                  </div>
                 </div>
               ))
             )}
