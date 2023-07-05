@@ -2,11 +2,15 @@ import { useEffect, useState } from 'react';
 import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
 import './BookList.css';
 import coverImg from '../../../src/images/cover_not_found.jpg';
+import axios from 'axios';
+import { useContext } from 'react';
+import { AppContext } from '../../auth/context';
 
-const Book = ({ id, title, author, cover, userId }) => {
+const Book = ({ id, title, author, cover }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [imageUrl, setImageUrl] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
+  const { user } = useContext(AppContext);
 
   useEffect(() => {
     const fetchCoverImage = async () => {
@@ -31,42 +35,25 @@ const Book = ({ id, title, author, cover, userId }) => {
     fetchCoverImage();
   }, [cover]);
 
-  useEffect(() => {
-    const fetchFavoriteStatus = () => {
-      const favoritesByUser = JSON.parse(localStorage.getItem('favoritesByUser')) || {};
+  const handleFavoriteClick = async () => {
+    try {
+      const userId = user.id;
+      const bookId = id;
+      const url = `https://prae-backend-projeto.herokuapp.com/interests/`;
 
-      // Verifique se o usuário possui uma lista de favoritos
-      if (favoritesByUser[userId]) {
-        const userFavorites = favoritesByUser[userId];
-        const isBookInFavorites = userFavorites.some((favBook) => favBook.id === id);
-        setIsFavorite(isBookInFavorites);
+      if (isFavorite) {
+        // Se o livro já está marcado como favorito, exclua-o dos favoritos
+        await axios.delete(url, { data: { user_id: userId, book_id: bookId } });
+        setIsFavorite(false);
+      } else {
+        // Se o livro não está marcado como favorito, adicione-o aos favoritos
+        const status = 0; // Defina o status aqui
+        await axios.post(url, { user_id: userId, book_id: bookId, status });
+        setIsFavorite(true);
       }
-    };
-
-    fetchFavoriteStatus();
-  }, [id, userId]);
-
-  const handleFavoriteClick = () => {
-    const favoritesByUser = JSON.parse(localStorage.getItem('favoritesByUser')) || {};
-
-    if (!favoritesByUser[userId]) {
-      favoritesByUser[userId] = [];
+    } catch (error) {
+      console.error("Erro ao salvar ou excluir o livro dos favoritos:", error);
     }
-
-    const userFavorites = favoritesByUser[userId];
-    const isBookInFavorites = userFavorites.some((favBook) => favBook.id === id);
-
-    if (isBookInFavorites) {
-      const updatedFavorites = userFavorites.filter((favBook) => favBook.id !== id);
-      favoritesByUser[userId] = updatedFavorites;
-      setIsFavorite(false);
-    } else {
-      const updatedFavorites = [...userFavorites, { id, title, author, cover }];
-      favoritesByUser[userId] = updatedFavorites;
-      setIsFavorite(true);
-    }
-
-    localStorage.setItem('favoritesByUser', JSON.stringify(favoritesByUser));
   };
 
   return (
@@ -85,7 +72,7 @@ const Book = ({ id, title, author, cover, userId }) => {
             {isFavorite ? (
               <AiFillStar className="star-icon1" />
             ) : (
-              <AiOutlineStar className="star-icon2" />
+              <AiFillStar className="star-icon2" />
             )}
           </span>
         </div>

@@ -104,7 +104,7 @@ console.log(user)
             <>
               <div className='booklist-content grid'>
                 {filteredBooksToDisplay.map((item, index) => {
-                  return <Book key={index} {...item} />;
+                  return <Book key={index} {...item} user={user}/>;
                 })}
               </div>
             </>
