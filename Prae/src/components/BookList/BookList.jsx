@@ -1,29 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useContext } from "react";
-import { useGlobalContext } from '../../context.';
+import { useGlobalContext } from "../../context.";
 import Book from "../BookList/Book";
 import Loading from "../Loader/Loader";
-import coverImg from '../../../src/images/cover_not_found.jpg';
+import coverImg from "../../../src/images/cover_not_found.jpg";
 import "./BookList.css";
-import Header from '../Header/Header';
-import { AppContext } from "../../auth/context"; 
+import Header from "../Header/Header";
+import { AppContext } from "../../auth/context";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
-  const [searchTerm, setSearchTerm] = useState(''); // State for search term
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
   const booksPerPage = 8;
   const { user } = useContext(AppContext);
-console.log(user)
+  console.log(user);
   useEffect(() => {
     fetchBooks();
   }, []);
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('https://prae-backend-projeto.herokuapp.com/books/all');
+      const response = await axios.get(
+        "https://prae-backend-projeto.herokuapp.com/books/all"
+      );
       setBooks(response.data.books);
       setIsLoading(false);
     } catch (error) {
@@ -66,31 +68,31 @@ console.log(user)
   return (
     <>
       <Header />
-      <section className='booklist'>
-        <div className='container'>
-          <div className='section-title'>
+      <section className="booklist">
+        <div className="container">
+          <div className="section-title">
             <h2>Lista de Livros</h2>
-            <div className='search-form'>
+            <div className="search-form">
               <input
-                type='text'
-                placeholder='Buscar por título...'
+                type="text"
+                placeholder="Buscar por título..."
                 value={searchTerm}
                 onChange={handleSearch}
               />
             </div>
-            <div className='pagination'>
+            <div className="pagination">
               <button
-                className='pagination-button'
+                className="pagination-button"
                 onClick={handlePreviousPage}
                 disabled={pageNumber === 1}
               >
                 Anterior
               </button>
-              <span className='pagination-page'>
+              <span className="pagination-page">
                 {pageNumber}/{totalPages}
               </span>
               <button
-                className='pagination-button'
+                className="pagination-button"
                 onClick={handleNextPage}
                 disabled={endIndex >= filteredBooks.length}
               >
@@ -102,9 +104,9 @@ console.log(user)
             <Loading />
           ) : (
             <>
-              <div className='booklist-content grid'>
+              <div className="booklist-content grid">
                 {filteredBooksToDisplay.map((item, index) => {
-                  return <Book key={index} {...item} user={user}/>;
+                  return <Book key={index} {...item} user={user} />;
                 })}
               </div>
             </>

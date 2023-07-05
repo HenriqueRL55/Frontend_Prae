@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Header from '../../../src/components/Header/Header';
-import Book from '../BookList/Book';
-import './Favorites.css';
-import { useContext } from 'react';
-import { AppContext } from '../../auth/context';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Header from "../../../src/components/Header/Header";
+import Book from "../BookList/Book";
+import "./Favorites.css";
+import { useContext } from "react";
+import { AppContext } from "../../auth/context";
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
@@ -28,7 +28,7 @@ const Favorites = () => {
 
         setFavorites(books);
       } catch (error) {
-        console.error('Erro ao buscar os livros favoritos:', error);
+        console.error("Erro ao buscar os livros favoritos:", error);
       }
     };
 
@@ -38,11 +38,11 @@ const Favorites = () => {
   return (
     <>
       <Header />
-      <section className='booklist'>
+      <section className="booklist">
         <div className="container">
           <h2>Lista de Favoritos</h2>
 
-          <div className='booklist-content grid'>
+          <div className="booklist-content grid">
             {favorites.length === 0 ? (
               <p>Você não possui nenhum livro favorito.</p>
             ) : (
