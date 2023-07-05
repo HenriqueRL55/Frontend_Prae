@@ -27,10 +27,10 @@ const Book = ({ id, title, author, cover, userId }) => {
         setIsLoading(false);
       }
     };
-  
+
     fetchCoverImage();
   }, [cover]);
- 
+
   useEffect(() => {
     const fetchFavoriteStatus = () => {
       const favoritesByUser = JSON.parse(localStorage.getItem('favoritesByUser')) || {};
