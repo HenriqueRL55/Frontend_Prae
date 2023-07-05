@@ -33,17 +33,28 @@ const Login = () => {
     setLoggedIn(false);
   };
 
+   useEffect(() => {
+    if (user) {
+      console.log(user); // Aqui você pode acessar o objeto do usuário
+    }
+  }, [user]);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       await login(email, password);
+      navigate("/book", { state: { user } });
     } catch (error) {
       setError(
         "Ocorreu um erro ao fazer login. Verifique suas credenciais e tente novamente."
       );
     }
   };
+  
+ 
+  
+  
 
   const handleRegister = () => {
     setRedirectToRegister(true);

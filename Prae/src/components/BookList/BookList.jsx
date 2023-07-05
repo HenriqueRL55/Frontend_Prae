@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useContext } from "react";
 import { useGlobalContext } from '../../context.';
 import Book from "../BookList/Book";
 import Loading from "../Loader/Loader";
 import coverImg from '../../../src/images/cover_not_found.jpg';
 import "./BookList.css";
 import Header from '../Header/Header';
+import { AppContext } from "../../auth/context"; 
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -13,7 +15,8 @@ const BookList = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [searchTerm, setSearchTerm] = useState(''); // State for search term
   const booksPerPage = 8;
-
+  const { user } = useContext(AppContext);
+console.log(user)
   useEffect(() => {
     fetchBooks();
   }, []);
