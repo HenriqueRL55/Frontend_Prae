@@ -108,7 +108,7 @@ const Register = () => {
           <div className="row">
             <i className="fas fa-users"></i>
             <Select
-              className="select"
+              className="selectUserType"
               value={selectedUserType}
               onChange={handleUserTypeChange}
               options={userOptions}
