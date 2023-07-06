@@ -84,13 +84,14 @@ const FavoritesAdmin = () => {
       const url = `https://prae-backend-projeto.herokuapp.com/interests/${interestId}/?status=${status}`;
       await axios.put(url);
 
-      // Create a new book if the "Aceito - vale" or "Aceito" option is selected
+      // Create a new book if the "Aceito" option is selected and only if the option was changed            
       if (
-        (status === 3 || status === 1) &&
+        (status === 1) &&
         bookTitle
       ) {
         await axios.post("https://prae-backend-projeto.herokuapp.com/books", {
           title: bookTitle,
+          interestId: interestId,
         });
         setBookTitle("");
       }
@@ -229,6 +230,9 @@ const FavoritesAdmin = () => {
                   <span> Nome: {selectedBook.user_name}</span>
                   <span> Categoria: {selectedBook.book_category}</span>
                   <span> Curso: {selectedBook.user_course}</span>
+                  {selectedBook.status === 1 && selectedBook.traded_book_title && ( 
+                   <span> Livro deixado: {selectedBook.traded_book_title}</span>
+                  )}
                 </div>
                 <div className="AutocompleteStyle">
                   <Select
