@@ -117,8 +117,13 @@ const CrudBook = () => {
       formData.append("title", bookData.title);
       formData.append("author", bookData.author);
       formData.append("category", bookData.category);
+      if (bookData.cover !== null) {
+        formData.append("cover", bookData.cover);
+      }
       formData.append("cover", bookData.cover);
       formData.append("quantity", bookData.quantity);
+
+      console.log(bookData.cover)
 
       await axios.post(
         "https://prae-backend-projeto.herokuapp.com/books",
@@ -227,7 +232,6 @@ const CrudBook = () => {
                 name="author"
                 value={bookData.author}
                 onChange={handleInputChange}
-                required
               />
             </div>
             <div className="form-group">
@@ -237,7 +241,6 @@ const CrudBook = () => {
                 name="category"
                 value={bookData.category}
                 onChange={handleInputChange}
-                required
               >
                 <option value="">Selecione uma categoria</option>
                 {categories.map((category) => (
@@ -255,7 +258,6 @@ const CrudBook = () => {
                 name="quantity"
                 value={bookData.quantity}
                 onChange={handleInputChange}
-                required
               />
             </div>
             <div className="form-group">
@@ -329,7 +331,6 @@ const CrudBook = () => {
                   name="author"
                   value={bookDataModal.author}
                   onChange={handleModalInputChange}
-                  required
                 />
               </div>
               <div className="form-group">
@@ -339,7 +340,6 @@ const CrudBook = () => {
                   name="category"
                   value={bookDataModal.category}
                   onChange={handleModalInputChange}
-                  required
                 >
                   <option value="">Selecione uma categoria</option>
                   {categories.map((category) => (
@@ -357,7 +357,6 @@ const CrudBook = () => {
                   name="quantity"
                   value={bookDataModal.quantity}
                   onChange={handleModalInputChange}
-                  required
                 />
               </div>
               <div className="form-group">
