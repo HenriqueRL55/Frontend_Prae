@@ -27,3 +27,72 @@
 .bookCard{
   cursor: pointer;
 }
+
+.statusBook{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin: 12px auto;
+  text-align: center;
+  color: white;
+  background-color: blueviolet;
+  height: 60px;
+  border-radius: 12px;
+}
+
+.xButton{
+  display: grid;
+  justify-content: end;
+  padding-right: 20px;
+}
+
+.titleModalBook{
+  display: flex;
+  margin: auto;
+}
+
+.infoUserBook{
+  display: grid;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.modal-content{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 1px solid blueviolet;
+}
+
+.buttonModalBook{
+  display: flex;
+  background-color: blueviolet;
+  border-radius: 12px;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+}
+
+.buttonModalBook2{
+  color: white;
+  font-size: 16px;
+  transform: translateY(-4px);
+  width: 100%;
+  
+}
+
+.buttonModalBook3{
+  color: white;
+  margin: 0 12px;
+  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  justify-content: center;
+}
+
+.buttonModalBookButton3{
+  color: white;
+  width: 100%;
+}

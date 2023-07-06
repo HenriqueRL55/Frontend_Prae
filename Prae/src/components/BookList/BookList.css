@@ -45,6 +45,8 @@
 
 .book-item {
   padding: 3rem 2rem;
+  min-height: 350px;
+  border: 1px solid blueviolet;
   border-radius: 4px;
   background-color: var(--white-color);
   box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 15px 0px;

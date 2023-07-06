@@ -139,7 +139,7 @@ const FavoritesAdmin = () => {
               {currentPage}/{pageCount}
             </span>
             <button className="paginationButton" onClick={() => handlePageChange(currentPage + 1)}>
-              Próxima
+              Próximo
             </button>
           </div>
           </div>
@@ -166,37 +166,42 @@ const FavoritesAdmin = () => {
                   currentPage * booksPerPage
                 )
                 .map((favorite) => (
-                  <div key={favorite.id}>
+                  <div  className="bookCard" key={favorite.id}>
                     {console.log(favorite)}
                     <Book
+                   
                       id={favorite.book_id}
                       title={favorite.book_title}
                       author={favorite.book_author}
                       cover={favorite.cover}
                       onClick={() => handleBookClick(favorite)}
                     />
-                    <div>
-                      Status:
-                      {selectedStatuses[favorite.id]
+                    <div className="statusBook">
+                      Status: 
+                       {selectedStatuses[favorite.id]
                         ? selectedStatuses[favorite.id].label
-                        : "N/A"}
+                        : " Cancelado"}
                     </div>
                   </div>
                 ))
             )}
           </div>
-        
           {showModal && (
             <div className="modal">
               <div className="modal-content">
+                <div className="xButton">
                 <button className="modal-close" onClick={handleCancel}>
                   X
                 </button>
+                </div>
+                <div  className="titleModalBook">
                 <h2>{selectedBook.book_title}</h2>
-                <div className="changeStyle">
-                  <div>
+                </div>
+              
+                  <div className="infoUserBook">
                     <span> Nome: {selectedBook.user_name}</span>
                     <span> Categoria: {selectedBook.book_category}</span>
+                    <span> Curso: {selectedBook.user_course}</span>
                   </div>
                   <div className="AutocompleteStyle">
                     <Select
@@ -209,17 +214,22 @@ const FavoritesAdmin = () => {
                      placeholder="Em andamento"
                      required
                     />
+                    </div>
+                    <div className="buttonModalBook">
                     {!showConfirmation ? (
-                      <button onClick={handleSubmit}>Enviar</button>
+                      <button className="buttonModalBook2" onClick={handleSubmit}>Enviar</button>
                     ) : (
                       <>
-                        <p>Deseja realizar essa ação?</p>
-                        <button onClick={handleConfirm}>Sim</button>
-                        <button onClick={handleCancel}>Não</button>
+                       
+                         <div className="buttonModalBook3">
+                         <div>Deseja relizar essa ação?</div>
+                        <button className="buttonModalBookButton3"onClick={handleConfirm}>Sim</button>
+                        <button className="buttonModalBookButton3"onClick={handleCancel}>Não</button>
+                        </div>
                       </>
                     )}
                   </div>
-                </div>
+                
               </div>
             </div>
           )}
