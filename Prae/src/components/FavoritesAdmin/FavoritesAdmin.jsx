@@ -17,6 +17,8 @@ const FavoritesAdmin = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const booksPerPage = 8;
+  const [showBookInput, setShowBookInput] = useState(false);
+  const [bookTitle, setBookTitle] = useState("");
 
   const statusOptions = [
     { value: 0, label: "Pendente" },
@@ -60,6 +62,7 @@ const FavoritesAdmin = () => {
       ...prevStatuses,
       [interestId]: selectedOption,
     }));
+    setShowBookInput(selectedOption.value === 3 || selectedOption.value === 1);
   };
 
   const handleBookClick = (book) => {
@@ -73,14 +76,24 @@ const FavoritesAdmin = () => {
 
   const handleConfirm = async () => {
     try {
+      // Update the book status
       const interestId = selectedBook.id;
       console.log("ID do interesse:", interestId); // Imprime o ID do interesse
       const status = selectedStatuses[interestId].value;
 
       const url = `https://prae-backend-projeto.herokuapp.com/interests/${interestId}/?status=${status}`;
-
-
       await axios.put(url);
+
+      // Create a new book if the "Aceito - vale" or "Aceito" option is selected
+      if (
+        (status === 3 || status === 1) &&
+        bookTitle
+      ) {
+        await axios.post("https://prae-backend-projeto.herokuapp.com/books", {
+          title: bookTitle,
+        });
+        setBookTitle("");
+      }
 
       // Atualize a lista de livros favoritos após a atualização do status
       fetchFavorites();
@@ -95,6 +108,7 @@ const FavoritesAdmin = () => {
   const handleCancel = () => {
     setShowModal(false);
     setShowConfirmation(false);
+    setBookTitle("");
   };
 
   // Calculate the number of pages
@@ -136,61 +150,66 @@ const FavoritesAdmin = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-              <div className="pagination">
-            <button className="paginationButton" onClick={() => handlePageChange(currentPage - 1)}>
-              Anterior
-            </button>
-            <span className="paginationPage">
-              {currentPage}/{pageCount}
-            </span>
-            <button className="paginationButton" onClick={() => handlePageChange(currentPage + 1)}>
-              Próximo
-            </button>
-          </div>
+            <div className="pagination">
+              <button
+                className="paginationButton"
+                onClick={() => handlePageChange(currentPage - 1)}
+              >
+                Anterior
+              </button>
+              <span className="paginationPage">
+                {currentPage}/{pageCount}
+              </span>
+              <button
+                className="paginationButton"
+                onClick={() => handlePageChange(currentPage + 1)}
+              >
+                Próximo
+              </button>
+            </div>
           </div>
           {isLoading ? (
             <Loading />
           ) : (
-          <div className="booklist-content grid">
-            {favorites.length === 0 ? (
-              <p>Nenhum livro foi favoritado.</p>
-            ) : (
-              favorites
-                .filter((favorite) =>
-                  filterStatus
-                    ? selectedStatuses[favorite.id]?.value === filterStatus.value
-                    : true
-                )
-                .filter((favorite) =>
-                  searchTerm
-                    ? favorite.user_name
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase())
-                    : true
-                )
-                .slice(
-                  (currentPage - 1) * booksPerPage,
-                  currentPage * booksPerPage
-                )
-                .map((favorite) => (
-                  <div  className="bookCard" key={favorite.id}>
-                    {console.log(favorite)}
-                    <Book
-                   
-                      id={favorite.book_id}
-                      title={favorite.book_title}
-                      author={favorite.book_author}
-                      cover={favorite.cover}
-                      onClick={() => handleBookClick(favorite)}
-                    />
-                    <div className="statusBook">
-                      Status: 
-                       {selectedStatuses[favorite.id]
-                        ? selectedStatuses[favorite.id].label
-                        : " Cancelado"}
+            <div className="booklist-content grid">
+              {favorites.length === 0 ? (
+                <p>Nenhum livro foi favoritado.</p>
+              ) : (
+                favorites
+                  .filter((favorite) =>
+                    filterStatus
+                      ? selectedStatuses[favorite.id]?.value ===
+                        filterStatus.value
+                      : true
+                  )
+                  .filter((favorite) =>
+                    searchTerm
+                      ? favorite.user_name
+                          .toLowerCase()
+                          .includes(searchTerm.toLowerCase())
+                      : true
+                  )
+                  .slice(
+                    (currentPage - 1) * booksPerPage,
+                    currentPage * booksPerPage
+                  )
+                  .map((favorite) => (
+                    <div className="bookCard" key={favorite.id}>
+                      {console.log(favorite)}
+                      <Book
+                        id={favorite.book_id}
+                        title={favorite.book_title}
+                        author={favorite.book_author}
+                        cover={favorite.cover}
+                        onClick={() => handleBookClick(favorite)}
+                      />
+                      <div className="statusBook">
+                        {selectedStatuses[favorite.id]
+                          ? selectedStatuses[favorite.id].label
+                          : " Cancelado"}
+                      </div>
                     </div>
-                  </div>
-                ))
+                  ))
               )}
             </div>
           )}
@@ -198,46 +217,71 @@ const FavoritesAdmin = () => {
             <div className="modal">
               <div className="modal-content">
                 <div className="xButton">
-                <button className="modal-close" onClick={handleCancel}>
-                  X
-                </button>
+                  <button className="modal-close" onClick={handleCancel}>
+                    X
+                  </button>
                 </div>
-                <div  className="titleModalBook">
-                <h2>{selectedBook.book_title}</h2>
+                <div className="titleModalBook">
+                  <h2>{selectedBook.book_title}</h2>
                 </div>
-              
-                  <div className="infoUserBook">
-                    <span> Nome: {selectedBook.user_name}</span>
-                    <span> Categoria: {selectedBook.book_category}</span>
-                    <span> Curso: {selectedBook.user_course}</span>
-                  </div>
-                  <div className="AutocompleteStyle">
-                    <Select
-                     className="select"
-                     value={selectedStatuses[selectedBook.id]}
-                     onChange={(selectedOption) =>
-                       handleStatusChange(selectedBook.id, selectedOption)
-                     }
-                     options={statusOptions}
-                     placeholder="Em andamento"
-                     required
+
+                <div className="infoUserBook">
+                  <span> Nome: {selectedBook.user_name}</span>
+                  <span> Categoria: {selectedBook.book_category}</span>
+                  <span> Curso: {selectedBook.user_course}</span>
+                </div>
+                <div className="AutocompleteStyle">
+                  <Select
+                    className="select"
+                    value={selectedStatuses[selectedBook.id]}
+                    onChange={(selectedOption) =>
+                      handleStatusChange(selectedBook.id, selectedOption)
+                    }
+                    options={statusOptions}
+                    placeholder="Em andamento"
+                    required
+                  />
+                </div>
+
+                {showBookInput && (
+                  <>
+                    <label htmlFor="book-title">
+                      Qual livro será adicionado ao acervo?
+                    </label>
+                    <input
+                      id="book-title"
+                      type="text"
+                      value={bookTitle}
+                      onChange={(e) => setBookTitle(e.target.value)}
                     />
-                    </div>
-                    <div className="buttonModalBook">
-                    {!showConfirmation ? (
-                      <button className="buttonModalBook2" onClick={handleSubmit}>Enviar</button>
-                    ) : (
-                      <>
-                       
-                         <div className="buttonModalBook3">
-                         <div>Deseja relizar essa ação?</div>
-                        <button className="buttonModalBookButton3"onClick={handleConfirm}>Sim</button>
-                        <button className="buttonModalBookButton3"onClick={handleCancel}>Não</button>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                
+                  </>
+                )}
+
+                <div className="buttonModalBook">
+                  {!showConfirmation ? (
+                    <button className="buttonModalBook2" onClick={handleSubmit}>
+                      Enviar
+                    </button>
+                  ) : (
+                    <>
+                      <div className="buttonModalBook3">
+                        <div>Deseja relizar essa ação?</div>
+                        <button
+                          className="buttonModalBookButton3"
+                          onClick={handleConfirm}
+                        >
+                          Sim
+                        </button>
+                        <button
+                          className="buttonModalBookButton3"
+                          onClick={handleCancel}
+                        >
+                          Não
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           )}
