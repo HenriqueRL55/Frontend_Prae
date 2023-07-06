@@ -11,6 +11,10 @@ const FavoritesAdmin = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [filterStatus, setFilterStatus] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const booksPerPage = 8;
 
   const statusOptions = [
     { value: 0, label: "Pendente" },
@@ -33,7 +37,7 @@ const FavoritesAdmin = () => {
       // Atualize o estado selectedStatuses com os valores de status retornados pela API
       const newSelectedStatuses = response.data.interests.reduce(
         (acc, favorite) => {
-          acc[favorite.book_id] = statusOptions.find(
+          acc[favorite.id] = statusOptions.find(
             (option) => option.value === favorite.status
           );
           return acc;
@@ -46,10 +50,10 @@ const FavoritesAdmin = () => {
     }
   };
 
-  const handleStatusChange = (bookId, selectedOption) => {
+  const handleStatusChange = (interestId, selectedOption) => {
     setSelectedStatuses((prevStatuses) => ({
       ...prevStatuses,
-      [bookId]: selectedOption,
+      [interestId]: selectedOption,
     }));
   };
 
@@ -66,7 +70,7 @@ const FavoritesAdmin = () => {
     try {
       const interestId = selectedBook.id;
       console.log("ID do interesse:", interestId); // Imprime o ID do interesse
-      const status = selectedStatuses[selectedBook.book_id].value;
+      const status = selectedStatuses[interestId].value;
 
       const url = `https://prae-backend-projeto.herokuapp.com/interests/${interestId}/?status=${status}`;
 
@@ -88,31 +92,100 @@ const FavoritesAdmin = () => {
     setShowConfirmation(false);
   };
 
+  // Calculate the number of pages
+  const pageCount = Math.ceil(
+    favorites.filter((favorite) =>
+      filterStatus
+        ? selectedStatuses[favorite.id]?.value === filterStatus.value
+        : true
+    ).length / booksPerPage
+  );
+
+  // Handle page change
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= pageCount) {
+      setCurrentPage(newPage);
+    }
+  };
+
   return (
     <>
       <Header />
       <section className="booklist">
         <div className="container">
           <h2>Dashboard de interesses</h2>
+          <div className="filter-container">
+            <label htmlFor="filter-status">Filtrar por status:</label>
+            <Select
+              id="filter-status"
+              className="select"
+              value={filterStatus}
+              onChange={setFilterStatus}
+              options={statusOptions}
+              placeholder="Selecione um status"
+            />
+            <label htmlFor="search-term">Buscar por nome:</label>
+            <input
+              id="search-term"
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+              <div className="pagination">
+            <button className="paginationButton" onClick={() => handlePageChange(currentPage - 1)}>
+              Anterior
+            </button>
+            <span className="paginationPage">
+              {currentPage}/{pageCount}
+            </span>
+            <button className="paginationButton" onClick={() => handlePageChange(currentPage + 1)}>
+              Próxima
+            </button>
+          </div>
+          </div>
 
           <div className="booklist-content grid">
             {favorites.length === 0 ? (
               <p>Nenhum livro foi favoritado.</p>
             ) : (
-              favorites.map((favorite) => (
-                <div key={favorite.id}>
-                  {console.log(favorite)}
-                  <Book
-                    id={favorite.book_id}
-                    title={favorite.book_title}
-                    author={favorite.book_author}
-                    cover={favorite.cover}
-                    onClick={() => handleBookClick(favorite)}
-                  />
-                </div>
-              ))
+              favorites
+                .filter((favorite) =>
+                  filterStatus
+                    ? selectedStatuses[favorite.id]?.value === filterStatus.value
+                    : true
+                )
+                .filter((favorite) =>
+                  searchTerm
+                    ? favorite.user_name
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase())
+                    : true
+                )
+                .slice(
+                  (currentPage - 1) * booksPerPage,
+                  currentPage * booksPerPage
+                )
+                .map((favorite) => (
+                  <div key={favorite.id}>
+                    {console.log(favorite)}
+                    <Book
+                      id={favorite.book_id}
+                      title={favorite.book_title}
+                      author={favorite.book_author}
+                      cover={favorite.cover}
+                      onClick={() => handleBookClick(favorite)}
+                    />
+                    <div>
+                      Status:
+                      {selectedStatuses[favorite.id]
+                        ? selectedStatuses[favorite.id].label
+                        : "N/A"}
+                    </div>
+                  </div>
+                ))
             )}
           </div>
+        
           {showModal && (
             <div className="modal">
               <div className="modal-content">
@@ -128,9 +201,9 @@ const FavoritesAdmin = () => {
                   <div className="AutocompleteStyle">
                     <Select
                      className="select"
-                     value={selectedStatuses[selectedBook.book_id]}
+                     value={selectedStatuses[selectedBook.id]}
                      onChange={(selectedOption) =>
-                       handleStatusChange(selectedBook.book_id, selectedOption)
+                       handleStatusChange(selectedBook.id, selectedOption)
                      }
                      options={statusOptions}
                      placeholder="Em andamento"

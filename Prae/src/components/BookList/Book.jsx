@@ -35,6 +35,21 @@ const Book = ({ id, title, author, cover, userName, onClick }) => {
     fetchCoverImage();
   }, [cover]);
 
+  useEffect(() => {
+    const fetchFavoriteStatus = async () => {
+      try {
+        // Replace this URL with the correct API endpoint to fetch the favorite status of the book
+        const url = `https://prae-backend-projeto.herokuapp.com/interests/${id}`;
+        const response = await axios.get(url);
+        setIsFavorite(response.data.isFavorite);
+      } catch (error) {
+        console.error("Erro ao buscar o status de favorito do livro:", error);
+      }
+    };
+
+    fetchFavoriteStatus();
+  }, [id]);
+
   const handleFavoriteClick = async () => {
     try {
       const userId = user.id;
