@@ -56,8 +56,6 @@ const Register = () => {
         }
       );
 
-      console.log(response.data); // or do something with the response
-
       setSuccessMessage("Usuário criado com sucesso!");
 
       // Redirecionar para a tela de login após 2 segundos

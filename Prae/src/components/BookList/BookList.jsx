@@ -16,7 +16,6 @@ const BookList = () => {
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
   const booksPerPage = 8;
   const { user } = useContext(AppContext);
-  console.log(user);
   useEffect(() => {
     fetchBooks();
   }, []);

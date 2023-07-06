@@ -16,7 +16,6 @@ const Login = () => {
   useEffect(() => {
     async function teste() {
       const teste = await api.get("/");
-      console.log(teste);
     }
     teste();
   }, []);

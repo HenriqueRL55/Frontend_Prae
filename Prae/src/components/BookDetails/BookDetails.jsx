@@ -20,7 +20,6 @@ const BookDetails = () => {
       try{
         const response = await fetch(`${URL}${id}.json`);
         const data = await response.json();
-        console.log(data);
 
         if(data){
           const {description, title, covers, subject_places, subject_times, subjects} = data;
