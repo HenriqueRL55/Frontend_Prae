@@ -4,6 +4,7 @@ import Header from "../../../src/components/Header/Header";
 import Book from "../BookList/Book";
 import "./FavoritesAdmin.css";
 import Select from "react-select";
+import Loading from "../Loader/Loader";
 
 const FavoritesAdmin = () => {
   const [favorites, setFavorites] = useState([]);
@@ -14,6 +15,7 @@ const FavoritesAdmin = () => {
   const [filterStatus, setFilterStatus] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
   const booksPerPage = 8;
 
   const statusOptions = [
@@ -29,6 +31,7 @@ const FavoritesAdmin = () => {
   }, []);
 
   const fetchFavorites = async () => {
+    setIsLoading(true);
     try {
       const url = "https://prae-backend-projeto.herokuapp.com/interests/all";
       const response = await axios.get(url);
@@ -47,6 +50,8 @@ const FavoritesAdmin = () => {
       setSelectedStatuses(newSelectedStatuses);
     } catch (error) {
       console.error("Erro ao buscar os livros favoritos:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -143,7 +148,9 @@ const FavoritesAdmin = () => {
             </button>
           </div>
           </div>
-
+          {isLoading ? (
+            <Loading />
+          ) : (
           <div className="booklist-content grid">
             {favorites.length === 0 ? (
               <p>Nenhum livro foi favoritado.</p>
@@ -184,8 +191,9 @@ const FavoritesAdmin = () => {
                     </div>
                   </div>
                 ))
-            )}
-          </div>
+              )}
+            </div>
+          )}
           {showModal && (
             <div className="modal">
               <div className="modal-content">

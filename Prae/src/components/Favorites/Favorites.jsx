@@ -5,13 +5,16 @@ import Book from "../BookList/Book";
 import "./Favorites.css";
 import { useContext } from "react";
 import { AppContext } from "../../auth/context";
+import Loading from "../Loader/Loader";
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
   const { user } = useContext(AppContext);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchFavorites = async () => {
+      setIsLoading(true);
       try {
         const url = `https://prae-backend-projeto.herokuapp.com/interests/user/${user.id}`;
         const response = await axios.get(url);
@@ -29,6 +32,8 @@ const Favorites = () => {
         setFavorites(books);
       } catch (error) {
         console.error("Erro ao buscar os livros favoritos:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -42,22 +47,26 @@ const Favorites = () => {
         <div className="container">
           <h2>Lista de Favoritos</h2>
 
-          <div className="booklist-content grid">
-            {favorites.length === 0 ? (
-              <p>Você não possui nenhum livro favorito.</p>
-            ) : (
-              favorites.map((favorite) => (
-                <div key={favorite.book.id}>
-                  <Book
-                    id={favorite.book.id}
-                    title={favorite.book.title}
-                    author={favorite.book.author}
-                    cover={favorite.book.cover}
-                  />
-                </div>
-              ))
-            )}
-          </div>
+          {isLoading ? (
+            <Loading />
+          ) : ( 
+            <div className="booklist-content grid">
+              {favorites.length === 0 ? (
+                <p>Você não possui nenhum livro favorito.</p>
+              ) : (
+                favorites.map((favorite) => (
+                  <div key={favorite.book.id}>
+                    <Book
+                      id={favorite.book.id}
+                      title={favorite.book.title}
+                      author={favorite.book.author}
+                      cover={favorite.book.cover}
+                    />
+                  </div>
+                ))
+              )}
+            </div>
+          )}
         </div>
       </section>
     </>
