@@ -3,11 +3,13 @@ import axios from "axios";
 import "./CrudBook.css";
 import Header from "../Header/Header";
 import coverImg from "../../../src/images/cover_not_found.jpg";
+import Loading from "../Loader/Loader";
 
 const categories = [1, 2, 3, 4, 5, 6];
 
 const CrudBook = () => {
   const [books, setBooks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [bookData, setBookData] = useState({
@@ -55,7 +57,9 @@ const CrudBook = () => {
         return book;
       });
       setBooks(booksWithImageUrl);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -111,6 +115,7 @@ const CrudBook = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); 
 
     try {
       const formData = new FormData();
@@ -122,8 +127,6 @@ const CrudBook = () => {
       }
       formData.append("cover", bookData.cover);
       formData.append("quantity", bookData.quantity);
-
-      console.log(bookData.cover)
 
       await axios.post(
         "https://prae-backend-projeto.herokuapp.com/books",
@@ -141,10 +144,13 @@ const CrudBook = () => {
       fetchBooks();
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleEditConfirmed = async () => {
+    setIsLoading(true);
     try {
       const formData = new FormData();
       formData.append("title", bookDataModal.title);
@@ -170,10 +176,13 @@ const CrudBook = () => {
       setShowConfirmation(false);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleDeleteConfirmed = async (book) => {
+    setIsLoading(true);
     try {
       await axios.delete(
         `https://prae-backend-projeto.herokuapp.com/books/${book.id}`
@@ -182,6 +191,8 @@ const CrudBook = () => {
       fetchBooks();
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -277,37 +288,43 @@ const CrudBook = () => {
             </button>
           </form>
         </div>
-        <div className="crud-container2">
-          <div className="booklist-content grid">
-            {books.map((book) => (
-              <div key={book.id} className="book-info">
-                <h3>{book.title}</h3>
-                <p>Autor: {book.author}</p>
-                <div className="imgBook">
-                  {book.imageUrl && (
-                    <img src={book.imageUrl} alt="Capa do Livro" />
-                  )}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+          <div className="crud-container2">
+            <div className="booklist-content grid">
+              {books.map((book) => (
+                <div key={book.id} className="book-info">
+                  <h3>{book.title}</h3>
+                  <p>Autor: {book.author}</p>
+                  <div className="imgBook">
+                    {book.imageUrl && (
+                      <img src={book.imageUrl} alt="Capa do Livro" />
+                    )}
+                  </div>
+                  <p>Categoria: {book.category}</p>
+                  <p>Quantidade: {book.quantity}</p>
+                  <div className="containerbuttonsDetailDel">
+                    <button
+                      className="buttonsDetailDel"
+                      onClick={() => handleBookClick(book)}
+                    >
+                      Detalhes
+                    </button>
+                    <button
+                      className="buttonsDetailDel"
+                      onClick={() => handleDeleteBook(book)}
+                  > 
+                      Excluir
+                    </button>
+                  </div>
                 </div>
-                <p>Categoria: {book.category}</p>
-                <p>Quantidade: {book.quantity}</p>
-                <div className="containerbuttonsDetailDel">
-                  <button
-                    className="buttonsDetailDel"
-                    onClick={() => handleBookClick(book)}
-                  >
-                    Detalhes
-                  </button>
-                  <button
-                    className="buttonsDetailDel"
-                    onClick={() => handleDeleteBook(book)}
-                  >
-                    Excluir
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+          </>
+        )}
         {selectedBook && (
           <div className="modal">
             <div className="modal-content">
