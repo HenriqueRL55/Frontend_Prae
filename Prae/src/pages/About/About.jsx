@@ -2,6 +2,7 @@ import React from 'react';
 import "./About.css";
 import aboutImg from "../../images/about-img.jpg";
 import Header from '../../../src/components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 
 const About = () => {
   return (
@@ -39,6 +40,7 @@ A partir de 2022, com o retorno das atividades presenciais no campus, a ação p
         </div>
       </div>
     </section>
+    <Footer/>
   </>
   )
   

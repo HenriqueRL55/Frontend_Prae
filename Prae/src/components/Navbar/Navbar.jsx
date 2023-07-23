@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import logoImg from "../../images/logo.png";
 import { GrLogout } from "react-icons/gr";
@@ -10,6 +10,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   const handleNavbar = () => setToggleMenu(!toggleMenu);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -52,7 +54,9 @@ const Navbar = () => {
               <li className="nav-item">
                 <Link
                   to="/book"
-                  className="nav-link text-uppercase text-white fs-22 fw-6 ls-1"
+                  className={`nav-link text-uppercase text-white fs-22 fw-6 ls-1 ${
+                    currentPath === "/book" ? "active" : ""
+                  }`}
                 >
                   Acervo
                 </Link>
@@ -60,7 +64,9 @@ const Navbar = () => {
               <li className="nav-item">
                 <Link
                   to="/about"
-                  className="nav-link text-uppercase text-white fs-22 fw-6 ls-1"
+                  className={`nav-link text-uppercase text-white fs-22 fw-6 ls-1 ${
+                    currentPath === "/about" ? "active" : ""
+                  }`}
                 >
                   Sobre
                 </Link>
@@ -69,7 +75,9 @@ const Navbar = () => {
                 <li className="nav-item">
                   <Link
                     to="/crudBook"
-                    className="nav-link text-uppercase text-white fs-22 fw-6 ls-1"
+                    className={`nav-link text-uppercase text-white fs-22 fw-6 ls-1 ${
+                      currentPath === "/crudBook" ? "active" : ""
+                    }`}
                   >
                     Cadastro
                   </Link>
@@ -78,7 +86,9 @@ const Navbar = () => {
               <li className="nav-item">
                 <Link
                   to={favoritesLink}
-                  className="nav-link text-uppercase text-white fs-22 fw-6 ls-1"
+                  className={`nav-link text-uppercase text-white fs-22 fw-6 ls-1 ${
+                    currentPath === favoritesLink ? "active" : ""
+                  }`}
                 >
                   Interesses
                 </Link>

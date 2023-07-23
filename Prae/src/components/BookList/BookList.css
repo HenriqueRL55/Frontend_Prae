@@ -2,6 +2,7 @@
 .book-details {
   padding: 3rem 0;
   background-color: #f8f9fa;
+  height: 1000px;
 }
 .booklist-content {
   gap: 3rem;

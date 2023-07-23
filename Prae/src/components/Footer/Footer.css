@@ -1,0 +1,33 @@
+.footer {
+    width: 100%;
+    background-color: white;
+    padding: 1rem 0;
+    border-top: 1px solid var(--purple-color);
+  }
+  
+  .footer-content {
+    justify-content: space-between;
+  }
+  
+  .footer-left a,
+  .footer-right a {
+    color: inherit;
+    text-decoration: none;
+    transition: var(--transition);
+  }
+  
+  .footer-left a:hover,
+  .footer-right a:hover {
+    color: var(--purple-color);
+  }
+
+  .footer-left{
+    text-align: left;
+  }
+
+  .footer-right{
+    text-align: right;
+  }
+
+
+  

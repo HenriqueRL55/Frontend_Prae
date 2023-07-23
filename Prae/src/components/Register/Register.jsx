@@ -5,7 +5,7 @@ import axios from "axios";
 import "./Register.css";
 
 const userOptions = [
-  { value: "1", label: "Administrador" },
+  //{ value: "1", label: "Administrador" },
   { value: "2", label: "Aluno" },
   { value: "3", label: "Professor" },
   { value: "4", label: "Servidor" },

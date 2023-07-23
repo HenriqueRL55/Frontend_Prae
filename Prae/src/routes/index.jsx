@@ -5,7 +5,6 @@ import Private from "./Private";
 import Home from "../pages/Home/Home";
 import About from "../pages/About/About";
 import BookList from "../components/BookList/BookList";
-import BookDetails from "../components/BookDetails/BookDetails";
 import CrudBook from "../components/CrudBook/CrudBook";
 import Login from "../components/Login/Login";
 import Favorites from "../components/Favorites/Favorites";

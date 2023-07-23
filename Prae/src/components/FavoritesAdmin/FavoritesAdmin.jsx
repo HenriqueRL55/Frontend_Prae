@@ -5,6 +5,7 @@ import Book from "../BookList/Book";
 import "./FavoritesAdmin.css";
 import Select from "react-select";
 import Loading from "../Loader/Loader";
+import Footer from "../Footer/Footer";
 
 const FavoritesAdmin = () => {
   const [favorites, setFavorites] = useState([]);
@@ -62,7 +63,7 @@ const FavoritesAdmin = () => {
       ...prevStatuses,
       [interestId]: selectedOption,
     }));
-    setShowBookInput(selectedOption.value === 3 || selectedOption.value === 1);
+    setShowBookInput(selectedOption.value === 1);
   };
 
   const handleBookClick = (book) => {

@@ -6,6 +6,7 @@ import "./Favorites.css";
 import { useContext } from "react";
 import { AppContext } from "../../auth/context";
 import Loading from "../Loader/Loader";
+import Footer from "../Footer/Footer";
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
@@ -69,6 +70,7 @@ const Favorites = () => {
           )}
         </div>
       </section>
+      <Footer/>
     </>
   );
 };

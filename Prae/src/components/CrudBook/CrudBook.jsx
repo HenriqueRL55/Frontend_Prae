@@ -4,6 +4,7 @@ import "./CrudBook.css";
 import Header from "../Header/Header";
 import coverImg from "../../../src/images/cover_not_found.jpg";
 import Loading from "../Loader/Loader";
+import Footer from "../Footer/Footer";
 
 const categories = [1, 2, 3, 4, 5, 6];
 

@@ -8,6 +8,7 @@ import coverImg from "../../../src/images/cover_not_found.jpg";
 import "./BookList.css";
 import Header from "../Header/Header";
 import { AppContext } from "../../auth/context";
+import Footer from "../Footer/Footer";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -112,7 +113,9 @@ const BookList = () => {
           )}
         </div>
       </section>
+      <Footer/>
     </>
+    
   );
 };
 

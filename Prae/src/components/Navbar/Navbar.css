@@ -62,6 +62,10 @@
   color: var(--purple-color);
 }
 
+.nav-link.active {
+  color: var(--purple-color);
+}
+
 @media screen and (min-width: 992px) {
   .navbar-collapse {
     position: relative;
