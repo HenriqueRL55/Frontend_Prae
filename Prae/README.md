@@ -134,7 +134,7 @@ Ao clicar em um livro que possui Status "Aceito", ele terá um campo adicional m
 
 ## Créditos
 
-Projeto SATIE foi constrúido por Henrique Lengruber e Vinicius Dutra.
+Projeto SATIE foi construído por Henrique Lengruber e Vinicius Dutra.
 
 ## Licença
 
