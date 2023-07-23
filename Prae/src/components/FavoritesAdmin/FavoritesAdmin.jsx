@@ -113,6 +113,7 @@ const FavoritesAdmin = () => {
     setBookTitle("");
   };
 
+  
   // Calculate the number of pages
   const pageCount = Math.ceil(
     favorites.filter((favorite) =>
@@ -171,50 +172,51 @@ const FavoritesAdmin = () => {
             </div>
           </div>
           {isLoading ? (
-            <Loading />
-          ) : (
-            <div className="booklist-content grid">
-              {favorites.length === 0 ? (
-                <p>Nenhum livro foi favoritado.</p>
-              ) : (
-                favorites
-                  .filter((favorite) =>
-                    filterStatus
-                      ? selectedStatuses[favorite.id]?.value ===
-                        filterStatus.value
-                      : true
-                  )
-                  .filter((favorite) =>
-                    searchTerm
-                      ? favorite.user_name
-                          .toLowerCase()
-                          .includes(searchTerm.toLowerCase())
-                      : true
-                  )
-                  .slice(
-                    (currentPage - 1) * booksPerPage,
-                    currentPage * booksPerPage
-                  )
-                  .map((favorite) => (
-                    <div className="bookCard" key={favorite.id}>
-                      {console.log(favorite)}
-                      <Book
-                        id={favorite.book_id}
-                        title={favorite.book_title}
-                        author={favorite.book_author}
-                        cover={favorite.cover}
-                        onClick={() => handleBookClick(favorite)}
-                      />
-                      <div className="statusBook">
-                        {selectedStatuses[favorite.id]
-                          ? selectedStatuses[favorite.id].label
-                          : " Cancelado"}
-                      </div>
-                    </div>
-                  ))
-              )}
+  <Loading />
+) : (
+  <div className="booklist-content grid">
+    {favorites.length === 0 ? (
+      <p>Nenhum livro foi favoritado.</p>
+    ) : (
+      favorites
+        .filter((favorite) =>
+          filterStatus
+            ? selectedStatuses[favorite.id]?.value === filterStatus.value
+            : true
+        )
+        .filter((favorite) =>
+          searchTerm
+            ? favorite.user_name
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase()) ||
+              favorite.book_title.toLowerCase().includes(searchTerm.toLowerCase())
+            : true
+        )
+        .slice(
+          (currentPage - 1) * booksPerPage,
+          currentPage * booksPerPage
+        )
+        .map((favorite) => (
+          <div className="bookCard" key={favorite.id}>
+            {console.log(favorite)}
+            <Book
+              id={favorite.book_id}
+              title={favorite.book_title}
+              author={favorite.book_author}
+              cover={favorite.cover}
+              onClick={() => handleBookClick(favorite)}
+            />
+            <div className="statusBook">
+              {selectedStatuses[favorite.id]
+                ? selectedStatuses[favorite.id].label
+                : " Cancelado"}
             </div>
-          )}
+          </div>
+        ))
+    )}
+  </div>
+)}
+
           {showModal && (
             <div className="modal">
               <div className="modal-content">

@@ -70,7 +70,6 @@ const Favorites = () => {
           )}
         </div>
       </section>
-      <Footer/>
     </>
   );
 };

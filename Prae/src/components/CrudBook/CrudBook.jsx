@@ -223,7 +223,7 @@ const CrudBook = () => {
       <Header />
       <div className="crud-container">
         <div className="crud-container1">
-          <h1>CRUD de Livros</h1>
+          <h1>Cadastro de Livro</h1>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="title">Título do Livro:</label>
